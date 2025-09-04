@@ -1,1 +1,12 @@
 @import "tailwindcss";
+@plugin "daisyui"; 
+
+@custom-variant dark ( &:where([data-theme="dark"]) ) ;
+
+.titleFont {
+  font-family: "Pacifico", cursive;
+}
+
+.textFont {
+  font-family: "Newsreader", serif;
+}
