@@ -16,7 +16,9 @@ const Header = () => {
     { name: "Login/Register", path: "/login" },
   ];
 
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "light"
+  );
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -29,7 +31,10 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 left-0 w-full bg-white/30 dark:bg-black/30 backdrop-blur-md shadow-md border-b border-white/20 dark:border-black/20 z-50 transition-colors duration-500">
+    <header
+      className="sticky top-0 left-0 w-full backdrop-blur-md shadow-md z-50 border-b transition-colors duration-500
+      bg-base-100 dark:bg-base-100 border-neutral dark:border-neutral"
+    >
       <div className="container mx-auto flex justify-between items-center px-4 py-4">
         {/* Logo */}
         <img
@@ -39,22 +44,23 @@ const Header = () => {
         />
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex space-x-6 items-center textFont">
+        <nav className="hidden lg:flex space-x-6 items-center font-medium">
           {navLinks.map((link, index) => (
             <motion.a
               key={index}
               href={link.path}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              className=""
             >
               {link.name}
             </motion.a>
           ))}
 
-          {/* Dark/Light Toggle for Desktop */}
+          {/* Dark/Light Toggle */}
           <button
             onClick={toggleTheme}
-            className="ml-4 text-xl transition-colors duration-300"
+            className="ml-4 text-xl "
           >
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
@@ -65,14 +71,14 @@ const Header = () => {
           {/* Dark/Light Toggle */}
           <button
             onClick={toggleTheme}
-            className="text-xl transition-colors duration-300"
+            className="text-xl "
           >
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
 
           {/* Hamburger */}
           <button
-            className="text-2xl"
+            className="text-2xl "
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
@@ -84,13 +90,13 @@ const Header = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="lg:hidden shadow-md backdrop-blur-md"
+            className="lg:hidden shadow-md backdrop-blur-md bg-base-100 dark:bg-base-100"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <ul className="flex h-screen justify-center flex-col items-center space-y-8 textFont">
+            <ul className="flex h-screen justify-center flex-col items-center space-y-8 font-medium">
               {navLinks.map((link, index) => (
                 <motion.li
                   key={index}
@@ -100,6 +106,7 @@ const Header = () => {
                   <a
                     href={link.path}
                     onClick={() => setIsOpen(false)}
+                    className="text-lg"
                   >
                     {link.name}
                   </a>

@@ -1,7 +1,32 @@
 @import "tailwindcss";
-@plugin "daisyui"; 
+@plugin "daisyui";
 
-@custom-variant dark ( &:where([data-theme="dark"]) ) ;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #d97706; /* Warm Gold for buttons/CTAs */
+  --color-secondary: #9333ea; /* Rich Purple for accents/badges */
+  --color-accent: #f43f5e; /* Vibrant Pink for highlights/hover */
+  --color-neutral: #f9fafb; /* Soft Gray for background */
+  --color-base-100: #ffffff; /* White for cards/content */
+  --color-info: #3b82f6; /* Soft Blue for info text */
+  --color-success: #10b981; /* Mint Green for success */
+  --color-warning: #f59e0b; /* Amber for alerts/highlights */
+  --color-error: #ef4444; /* Red for errors */
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #fbbf24; /* Bright Gold for buttons/CTAs */
+  --color-secondary: #a78bfa; /* Soft Purple for accents/badges */
+  --color-accent: #f472b6; /* Pink for highlights/hover */
+  --color-neutral: #1f2937; /* Dark Gray for background */
+  --color-base-100: #111827; /* Almost Black for cards/content */
+  --color-info: #60a5fa; /* Light Blue for info text */
+  --color-success: #34d399; /* Mint Green for success */
+  --color-warning: #facc15; /* Yellow for alerts/highlights */
+  --color-error: #f87171; /* Soft Red for errors */
+}
 
 .titleFont {
   font-family: "Pacifico", cursive;
