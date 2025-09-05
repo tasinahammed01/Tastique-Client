@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
@@ -66,7 +66,7 @@ const HeroSection = () => {
         </motion.p>
         <Link to="/">
           <motion.button
-            className="bg-primary cursor-pointer text-white px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors"
+            className="bg-accent cursor-pointer text-white px-6 py-3 rounded-full font-medium hover:bg-accent/90 transition-colors"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}

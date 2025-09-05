@@ -6,7 +6,7 @@
   default: true;
   --color-primary: #d97706; /* Warm Gold for buttons/CTAs */
   --color-secondary: #9333ea; /* Rich Purple for accents/badges */
-  --color-accent: #f43f5e; /* Vibrant Pink for highlights/hover */
+  --color-accent: #8B755A; /* Vibrant Pink for highlights/hover */
   --color-neutral: #f9fafb; /* Soft Gray for background */
   --color-base-100: #ffffff; /* White for cards/content */
   --color-info: #3b82f6; /* Soft Blue for info text */
@@ -19,7 +19,7 @@
   name: "dark";
   --color-primary: #fbbf24; /* Bright Gold for buttons/CTAs */
   --color-secondary: #a78bfa; /* Soft Purple for accents/badges */
-  --color-accent: #f472b6; /* Pink for highlights/hover */
+  --color-accent: #8B755A; /* Pink for highlights/hover */
   --color-neutral: #1f2937; /* Dark Gray for background */
   --color-base-100: #111827; /* Almost Black for cards/content */
   --color-info: #60a5fa; /* Light Blue for info text */
