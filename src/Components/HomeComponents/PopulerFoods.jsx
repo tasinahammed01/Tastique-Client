@@ -1,9 +1,10 @@
 import React from 'react';
+import TitleSection from '../../SharedComponents/TitleSection';
 
 const PopulerFoods = () => {
     return (
         <div>
-            This is populer foods
+            <TitleSection title="Populer Foods" subtitle="Magical Experience"></TitleSection>
         </div>
     );
 };

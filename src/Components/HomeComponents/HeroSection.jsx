@@ -51,9 +51,10 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <span className="titleFont">Welcome</span>
-          <br/>
+          <div className="flex flex-col gap-5">
+            <span className="titleFont">Welcome</span>
           <span>Testique Restaurant</span>
+          </div>
         </motion.h1>
         <motion.p
           className="text-white text-sm  md:text-xl mb-6 max-w-2xl"
