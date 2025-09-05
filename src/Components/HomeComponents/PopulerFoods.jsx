@@ -77,7 +77,7 @@ const PopulerFoods = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.4, duration: 0.8 }}
                   >
-                    Order Now
+                    See Details
                   </motion.button>
                 </Link>
               </div>
