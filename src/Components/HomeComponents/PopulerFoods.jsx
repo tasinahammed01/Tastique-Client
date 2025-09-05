@@ -15,11 +15,11 @@ const PopulerFoods = () => {
   }, []);
 
   return (
-    <div className="py-20 px-4 lg:px-20 ">
+    <div className="py-20 px-4 lg:px-20 2xl:px-40">
       <TitleSection title="Popular Foods" subtitle="Magical Experience" />
 
-      <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {populerFood.map((food, index) => (
+      <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+        {populerFood.slice(0, 6).map((food, index) => (
           <div
             key={index}
             className="relative rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
@@ -59,10 +59,10 @@ const PopulerFoods = () => {
               </div>
 
               {/* Buttons */}
-              <div className="mt-4  flex gap-3">
+              <div className="mt-4 flex flex-col gap-3 xl:flex-row">
                 <Link to="/">
                   <motion.button
-                    className="cursor-pointer text-white bg-accent hover:bg-accent/90 lg:px-10 lg:py-3 md:px-7 md:py-4 px-5 py-2 rounded-full font-medium transition-colors"
+                    className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 md:px-7 md:py-4 lg:px-5 lg:py-3 xl:px-10 xl:py-3 2xl:px-10 2xl:py-3 px-5 py-2 rounded-full font-medium transition-colors"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.4, duration: 0.8 }}
@@ -72,7 +72,7 @@ const PopulerFoods = () => {
                 </Link>
                 <Link to="/">
                   <motion.button
-                    className="cursor-pointer text-accent hover:text-white border border-accent lg:px-10 lg:py-3 md:px-7 md:py-4 px-5 py-2 rounded-full font-medium hover:bg-accent/90 transition-colors"
+                    className="w-full xl:w-auto cursor-pointer text-accent hover:text-white border border-accent md:px-7 md:py-4 lg:px-5 lg:py-3 xl:px-10 xl:py-3 2xl:px-10 2xl:py-3 px-5 py-2 rounded-full font-medium hover:bg-accent/90 transition-colors"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.4, duration: 0.8 }}
