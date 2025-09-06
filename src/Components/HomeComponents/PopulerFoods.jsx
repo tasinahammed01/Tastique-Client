@@ -22,7 +22,7 @@ const PopulerFoods = () => {
         {populerFood.slice(0, 6).map((food, index) => (
           <div
             key={index}
-            className="relative rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+            className="relative bg-neutral rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
           >
             {/* Food Image */}
             <div className="relative h-[300px] object-cover">
@@ -95,7 +95,7 @@ const PopulerFoods = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 1.4, duration: 0.8 }}
     >
-      See All
+      See All Foods
     </motion.button>
   </Link>
 
