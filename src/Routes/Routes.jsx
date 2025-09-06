@@ -6,6 +6,7 @@ import SingleBlog from "../Pages/SingleBlog";
 import ContactUs from "../Pages/ContactUs";
 import AboutUs from "../Pages/AboutUs";
 import Menu from "../Pages/Menu"; 
+import SingleMenu from "../Pages/SingleMenu";
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +20,14 @@ const routes = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu></Menu> ,
+      },
+      {
+        path: "/menu",
+        element: <Menu></Menu> ,
+      },
+      {
+        path: "/menu/:id",
+        element: <SingleMenu></SingleMenu> ,
       },
       {
         path: "/contact",
