@@ -85,6 +85,22 @@ const PopulerFoods = () => {
           </div>
         ))}
       </div>
+
+      {/* Buttons */}
+<div className="mt-10 flex justify-center items-center">
+  <Link to="/">
+    <motion.button
+      className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-15 py-3  rounded-full font-medium transition-colors"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.4, duration: 0.8 }}
+    >
+      See All
+    </motion.button>
+  </Link>
+
+</div>
+
     </div>
   );
 };
