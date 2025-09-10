@@ -37,7 +37,7 @@ const DashboardLayout = () => {
 
   if (!user) return null; // loader or redirect while auth initializes
 
-  const { dashboardLabel, dashboardUrl, links } = roleConfig[user.role] || {};
+  const { dashboardLabel, links } = roleConfig[user.role] || {};
 
   return (
     <div className="flex h-[90vh]">
@@ -88,14 +88,10 @@ const DashboardLayout = () => {
 
         {/* Bottom section */}
         <div className="p-4 border-t border-gray-700">
-          <Link to={`${dashboardUrl}/profile`}>
-            <button className="w-full text-left p-2 rounded hover:bg-gray-700">
-              Profile
-            </button>
-          </Link>
+          
           <button
             onClick={handleLogout}
-            className="w-full text-left p-2 rounded bg-red-600 mt-2 hover:bg-red-700"
+            className="w-full text-left p-2 rounded bg-accent mt-2 hover:bg-accent/80 cursor-pointer"
           >
             Logout
           </button>
