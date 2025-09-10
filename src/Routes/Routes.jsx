@@ -23,6 +23,7 @@ import Analytics from "../Components/AdminDashboard/Analytics";
 import CustomerOrders from "../Components/Customers/CustomerOrders";
 import CustomerProfile from "../Components/Customers/CustomerProfile";
 import DashboardLayout from "../Layout/DashboardLayout";
+import Favorite from "../Components/Customers/Fovorite";
 
 const routes = createBrowserRouter([
   {
@@ -64,6 +65,7 @@ const routes = createBrowserRouter([
 
           // ✅ Customer Dashboard Routes
           { path: "customer/orders", element: <CustomerOrders /> },
+          { path: "customer/favorites", element: <Favorite /> },
           { path: "customer/profile", element: <CustomerProfile /> },
         ],
       },

@@ -39,6 +39,8 @@ const Register = () => {
       const newUser = {
         name: data.name,
         email: data.email,
+        phone: "",
+        address: "",
         password: data.password, 
         role: "customer",
         cart: [],

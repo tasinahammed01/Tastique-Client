@@ -20,6 +20,7 @@ const roleConfig = {
     dashboardUrl: "/dashboard/customer",
     links: [
       { label: "My Orders", to: "/dashboard/customer/orders" },
+      { label: "My Favorites", to: "/dashboard/customer/favorites" },
       { label: "My Profile", to: "/dashboard/customer/profile" },
     ],
   },
