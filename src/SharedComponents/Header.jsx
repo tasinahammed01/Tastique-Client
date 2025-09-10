@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes, FaSun, FaMoon, FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../Provider/CartContext";
-import { useAuth } from "../Provider/AuthContext";
+import { AuthContext } from "../Provider/AuthContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState([]);
   const { cartCount } = useCart();
-  const { user, logout } = useAuth();
+
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+  const user = auth?.user;
 
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "light"
@@ -22,18 +26,43 @@ const Header = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
 
-  // Nav links dynamically update based on user auth
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Menu", path: "/menu" },
-    { name: "Reservation", path: "/reservation" },
-    { name: "Blogs", path: "/blogs" },
-    { name: "Contact", path: "/contact" },
-    { name: "About", path: "/about" },
-    { name: "Gallery", path: "/gallery" },
-  ];
+  const handleLogout = useCallback(async () => {
+    try {
+      if (auth?.signOutUser) {
+        await auth.signOutUser();
+        setIsOpen(false);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  }, [auth, navigate]);
+
+  // Set nav links dynamically
+  useEffect(() => {
+    const links = [
+      { name: "Home", path: "/" },
+      { name: "Menu", path: "/menu" },
+      { name: "Reservation", path: "/reservation" },
+      { name: "Blogs", path: "/blogs" },
+      { name: "Contact", path: "/contact" },
+      { name: "About", path: "/about" },
+      { name: "Gallery", path: "/gallery" },
+    ];
+
+    // Add Dashboard only if user exists
+    if (user) {
+      links.push({
+        name: "Dashboard",
+        path: user.role === "admin" ? "/admin" : "/dashboard",
+      });
+    }
+
+    setNavLinks(links);
+  }, [user]);
 
   return (
     <header className="sticky top-0 left-0 w-full backdrop-blur-md shadow-md z-50 border-b transition-colors duration-500 bg-base-100 dark:bg-base-100 border-neutral dark:border-neutral">
@@ -42,7 +71,7 @@ const Header = () => {
         <Link to="/">
           <img
             className="w-16"
-            src="https://i.ibb.co.com/V0dc4xBb/Screenshot-656-removebg-preview.png"
+            src="https://i.ibb.co/V0dc4xBb/Screenshot-656-removebg-preview.png"
             alt="Foodie Logo"
           />
         </Link>
@@ -50,45 +79,37 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex space-x-6 items-center font-medium">
           {navLinks.map((link, index) => (
-            <motion.a
+            <motion.div
               key={index}
-              href={link.path}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              {link.name}
-            </motion.a>
+              <Link to={link.path}>{link.name}</Link>
+            </motion.div>
           ))}
 
-          {/* Dynamic Auth Links */}
-          {user ? (
-            <>
-              <motion.a
-                href={user.role === "admin" ? "/admin" : "/dashboard"}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Dashboard
-              </motion.a>
+          {/* Only Logout button */}
+          {user && (
+            <motion.button
+              onClick={handleLogout}
+              whileHover={{ scale: 1.05 }}
+              className="ml-2 font-medium hover:underline"
+            >
+              Logout
+            </motion.button>
+          )}
+          {!user && (
+            <Link to="/register">
               <motion.button
-                onClick={logout}
                 whileHover={{ scale: 1.05 }}
                 className="ml-2 font-medium hover:underline"
               >
-                Logout
+                Login/Register
               </motion.button>
-            </>
-          ) : (
-            <motion.a
-              href="/register"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Login/Register
-            </motion.a>
+            </Link>
           )}
 
-          {/* Cart icon with count */}
+          {/* Cart */}
           <div className="relative ml-4 text-2xl cursor-pointer">
             <Link to="/cart">
               <FaShoppingCart />
@@ -100,13 +121,13 @@ const Header = () => {
             )}
           </div>
 
-          {/* Dark/Light Toggle */}
+          {/* Theme toggle */}
           <button onClick={toggleTheme} className="ml-4 text-xl">
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
         </nav>
 
-        {/* Mobile Hamburger + Dark/Light Toggle */}
+        {/* Mobile Hamburger + Theme */}
         <div className="flex items-center lg:hidden space-x-4">
           <button onClick={toggleTheme} className="text-xl">
             {theme === "light" ? <FaMoon /> : <FaSun />}
@@ -134,49 +155,39 @@ const Header = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <a
-                    href={link.path}
+                  <Link
+                    to={link.path}
                     onClick={() => setIsOpen(false)}
                     className="text-lg"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </motion.li>
               ))}
 
-              {user ? (
-                <>
-                  <motion.li whileHover={{ scale: 1.05 }}>
-                    <a
-                      href={user.role === "admin" ? "/admin" : "/dashboard"}
-                      onClick={() => setIsOpen(false)}
-                      className="text-lg"
-                    >
-                      Dashboard
-                    </a>
-                  </motion.li>
-                  <motion.li whileHover={{ scale: 1.05 }}>
-                    <button
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
-                      className="text-lg font-medium hover:underline"
-                    >
-                      Logout
-                    </button>
-                  </motion.li>
-                </>
-              ) : (
+              {/* Only Logout button */}
+              {user && (
                 <motion.li whileHover={{ scale: 1.05 }}>
-                  <a
-                    href="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="text-lg"
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="text-lg font-medium hover:underline"
+                  >
+                    Logout
+                  </button>
+                </motion.li>
+              )}
+              {!user && (
+                <Link to="/register">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    className="ml-2 font-medium hover:underline"
                   >
                     Login/Register
-                  </a>
-                </motion.li>
+                  </motion.button>
+                </Link>
               )}
             </ul>
           </motion.div>

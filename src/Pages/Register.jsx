@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const Register = () => {
   const {
@@ -12,9 +14,9 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-
   const [animationData, setAnimationData] = useState(null);
 
+  // Load Lottie animation
   useEffect(() => {
     fetch("https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json")
       .then((res) => res.json())
@@ -24,28 +26,41 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+      // Check if user exists
       const res = await axios.get("http://localhost:5000/users");
       const existingUser = res.data.find((u) => u.email === data.email);
-
       if (existingUser) {
         Swal.fire("Error", "Email already registered", "error");
         return;
       }
 
+   
+
       const newUser = {
         name: data.name,
         email: data.email,
-        password: data.password,
+        password: data.password, 
         role: "customer",
         cart: [],
         orders: [],
       };
 
-      console.log("New User:", newUser);
+      // Save user in MongoDB
+      const backendResponse = await axios.post(
+        "http://localhost:5000/users",
+        newUser
+      );
+      if (backendResponse.status !== 201)
+        throw new Error("MongoDB save failed");
+
+      // Save user in Firebase
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
 
       Swal.fire("Success!", "Registration successful", "success");
       navigate("/login");
     } catch (err) {
+      console.error(err);
       Swal.fire("Error", "Registration failed", "error");
     }
   };

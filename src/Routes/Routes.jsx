@@ -14,6 +14,9 @@ import Cart from "../Pages/Cart";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "../SharedComponents/Dashboard";
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -61,7 +64,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <CheckOut></CheckOut>,
+        element: (
+          <ProtectedRoute>
+            <CheckOut></CheckOut>
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
@@ -70,6 +77,17 @@ const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        children: [
+          
+        ],
       },
     ],
   },

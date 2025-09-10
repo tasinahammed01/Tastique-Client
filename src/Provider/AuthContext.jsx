@@ -1,51 +1,86 @@
-// AuthContext.jsx
-import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import auth from "../firebase/firebase.init";
 
-const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
-export const useAuth = () => useContext(AuthContext);
-
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const login = async (email, password) => {
-    setLoading(true);
+  // Fetch user details from backend
+  const fetchUserDetails = async (firebaseUser) => {
     try {
-      const res = await axios.get("http://localhost:5000/users"); // fetch all users
-      const foundUser = res.data.find(
-        (u) => u.email === email && u.password === password
+      const response = await fetch(
+        `http://localhost:5000/users?email=${firebaseUser.email}`
       );
-      if (foundUser) {
-        setUser(foundUser);
-        localStorage.setItem("user", JSON.stringify(foundUser)); // persist login
-        setLoading(false);
-        return { success: true };
-      } else {
-        setLoading(false);
-        return { success: false, message: "Invalid email or password" };
+      if (response.ok) {
+        const users = await response.json();
+        const userData = users.find((u) => u.email === firebaseUser.email);
+        if (userData) {
+          const formattedUser = {
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            role: userData.role,
+            name: userData.name,
+            totalDonated: userData.totalDonated,
+          };
+          setUser(formattedUser);
+          localStorage.setItem("user", JSON.stringify(formattedUser));
+        }
       }
-    } catch (err) {
-      setLoading(false);
-      return { success: false, message: "Login failed" };
+    } catch (error) {
+      console.error("Error fetching user details:", error);
     }
   };
 
-  const logout = () => {
+  // Create User
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  // Sign In
+  const signInUser = async (email, password) => {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    return credential;
+  };
+
+  // Sign Out
+  const signOutUser = async () => {
+    await signOut(auth);
     setUser(null);
     localStorage.removeItem("user");
   };
 
-  // persist user on page refresh
+  // Firebase auth observer
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        await fetchUserDetails(firebaseUser);
+      } else {
+        setUser(null);
+        localStorage.removeItem("user");
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    signInUser,
+    signOutUser,
+  };
+
+  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
 };
+
+export default AuthProvider;
