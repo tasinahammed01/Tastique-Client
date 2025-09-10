@@ -5,6 +5,7 @@ import Blogs from "../Pages/Blogs";
 import SingleBlog from "../Pages/SingleBlog";
 import ContactUs from "../Pages/ContactUs";
 import AboutUs from "../Pages/AboutUs";
+import Gallery from "../Pages/Gallery";
 import Menu from "../Pages/Menu";
 import SingleMenu from "../Pages/SingleMenu";
 import Cart from "../Pages/Cart";
@@ -37,6 +38,10 @@ const routes = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs></AboutUs>,
+      },
+      {
+        path: "/gallery",
+        element: <Gallery></Gallery>,
       },
       {
         path: "/blogs",
