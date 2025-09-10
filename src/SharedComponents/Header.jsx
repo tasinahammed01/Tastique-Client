@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
+import { FaBars, FaTimes, FaSun, FaMoon, FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router";
+import { useCart } from "../Provider/CartContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { cartCount } = useCart();
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -20,6 +23,7 @@ const Header = () => {
     () => localStorage.getItem("theme") || "light"
   );
 
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -31,10 +35,7 @@ const Header = () => {
   };
 
   return (
-    <header
-      className="sticky top-0 left-0 w-full backdrop-blur-md shadow-md z-50 border-b transition-colors duration-500
-      bg-base-100 dark:bg-base-100 border-neutral dark:border-neutral"
-    >
+    <header className="sticky top-0 left-0 w-full backdrop-blur-md shadow-md z-50 border-b transition-colors duration-500 bg-base-100 dark:bg-base-100 border-neutral dark:border-neutral">
       <div className="container mx-auto flex justify-between items-center px-4 py-4">
         {/* Logo */}
         <img
@@ -51,36 +52,35 @@ const Header = () => {
               href={link.path}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className=""
             >
               {link.name}
             </motion.a>
           ))}
 
+          {/* Cart icon with count */}
+          <div className="relative ml-4 text-2xl cursor-pointer">
+            <Link to="/cart">
+              <FaShoppingCart />
+            </Link>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                {cartCount}
+              </span>
+            )}
+          </div>
+
           {/* Dark/Light Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="ml-4 text-xl "
-          >
+          <button onClick={toggleTheme} className="ml-4 text-xl">
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
         </nav>
 
         {/* Mobile Hamburger + Dark/Light Toggle */}
         <div className="flex items-center lg:hidden space-x-4">
-          {/* Dark/Light Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="text-xl "
-          >
+          <button onClick={toggleTheme} className="text-xl">
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
-
-          {/* Hamburger */}
-          <button
-            className="text-2xl "
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <button className="text-2xl" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>

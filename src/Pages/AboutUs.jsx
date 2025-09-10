@@ -61,8 +61,8 @@ const AboutUs = () => {
           viewport={{ once: true }}
         >
           <img
-            className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-full h-auto rounded-2xl object-cover"
-            src="https://i.ibb.co/2tXwVtg/restaurant-chef.jpg"
+            className="w-full max-w-md md:max-w-xl  h-auto rounded-2xl object-cover"
+            src="https://i.ibb.co.com/kVXm0nFS/Screenshot-665.png"
             alt="Restaurant Team"
           />
         </motion.div>

@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { useCart } from "../Provider/CartContext";
+import Swal from "sweetalert2";
 
 const Menu = () => {
   const [foods, setFoods] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const { addToCart } = useCart();
 
   useEffect(() => {
     fetch("http://localhost:5000/allfoods")
@@ -29,6 +32,20 @@ const Menu = () => {
   }, [search, category, foods]);
 
   const categories = ["All", ...new Set(foods.map((f) => f.category))];
+
+  // Handle adding food to cart
+  const handleAddToCart = (food) => {
+    addToCart(food);
+    Swal.fire({
+      icon: "success",
+      title: "Added to Cart",
+      text: `${food.name} has been added to your cart!`,
+      showConfirmButton: false,
+      timer: 1500,
+      toast: true,
+      position: "top-end",
+    });
+  };
 
   return (
     <div className="px-4 sm:px-6 md:px-12 lg:px-20 py-12">
@@ -110,7 +127,10 @@ const Menu = () => {
 
               {/* Buttons */}
               <div className="mt-4 flex flex-col gap-3 xl:flex-row">
-                <motion.button className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors">
+                <motion.button 
+                  onClick={() => handleAddToCart(food)}
+                  className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors"
+                >
                   Add to Cart
                 </motion.button>
                 <Link to={`/menu/${food._id}`}>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router";
+import { useCart } from "../Provider/CartContext";
+import Swal from "sweetalert2";
 
 const SingleMenu = () => {
   const [food, setFood] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const { addToCart } = useCart();
 
   const { id } = useParams();
 
@@ -29,6 +32,22 @@ const SingleMenu = () => {
 
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => quantity > 1 && setQuantity(quantity - 1);
+
+  // Handle adding food to cart with quantity
+  const handleAddToCart = () => {
+    if (food) {
+      addToCart({ ...food, quantity });
+      Swal.fire({
+        icon: "success",
+        title: "Added to Cart",
+        text: `${food.name} (${quantity}x) has been added to your cart!`,
+        showConfirmButton: false,
+        timer: 1500,
+        toast: true,
+        position: "top-end",
+      });
+    }
+  };
 
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
@@ -118,7 +137,10 @@ const SingleMenu = () => {
           </div>
 
           <div className="flex gap-4 mb-8 flex-col xl:flex-row">
-            <motion.button className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors">
+            <motion.button 
+              onClick={handleAddToCart}
+              className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors"
+            >
               Add to Cart
             </motion.button>
             <Link to="/checkout">
