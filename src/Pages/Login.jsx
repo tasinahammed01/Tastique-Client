@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Provider/AuthContext";
 import Lottie from "lottie-react";
 
@@ -18,7 +18,9 @@ const Login = () => {
 
   // Fetch Lottie JSON for Login
   useEffect(() => {
-    fetch("https://assets7.lottiefiles.com/packages/lf20_ikvz3x3v.json")
+    fetch(
+      "https://lottie.host/203cfff8-f15b-45fb-935f-41b9c5d9d0db/BnDVtJSv59.json"
+    )
       .then((res) => res.json())
       .then((data) => setAnimationData(data))
       .catch((err) => console.error("Failed to load Lottie animation:", err));
@@ -45,38 +47,47 @@ const Login = () => {
       )}
 
       {/* Login Form */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full md:w-1/2 max-w-md p-8 rounded-2xl shadow-lg bg-base-100"
-      >
-        <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
-
-        <input
-          {...formRegister("email", { required: true })}
-          placeholder="Email"
-          className="w-full p-3 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mb-2">Email is required</p>
-        )}
-
-        <input
-          {...formRegister("password", { required: true })}
-          type="password"
-          placeholder="Password"
-          className="w-full p-3 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mb-2">Password is required</p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full py-3 bg-accent text-white rounded-lg font-semibold hover:bg-accent/70 transition"
+      <div className="w-full md:w-1/2 flex flex-col items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full max-w-md p-8 rounded-2xl shadow-lg bg-base-100 flex flex-col gap-4"
         >
-          Login
-        </button>
-      </form>
+          <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
+
+          <input
+            {...formRegister("email", { required: true })}
+            placeholder="Email"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">Email is required</p>
+          )}
+
+          <input
+            {...formRegister("password", { required: true })}
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">Password is required</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-accent text-white rounded-lg font-semibold hover:bg-accent/70 transition"
+          >
+            Login
+          </button>
+        </form>
+
+        <Link
+          to="/register"
+          className="mt-4 text-accent hover:underline font-medium"
+        >
+          Don't have an account? Register
+        </Link>
+      </div>
     </div>
   );
 };
