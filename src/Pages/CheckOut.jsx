@@ -19,6 +19,25 @@ const CheckOut = () => {
     clearCart(); // clear cart after placing order
   };
 
+  const handleSeeAllFoods = (e) => {
+    if (cart.length === 0) {
+      e.preventDefault(); // prevent navigation if needed
+      Swal.fire({
+        title: "Your cart is empty!",
+        text: "Please add some items before proceeding.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+    } else {
+      Swal.fire({
+        title: "Redirecting to menu...",
+        icon: "info",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+    }
+  };
+
   return (
     <div className="px-6 md:px-16 py-10 min-h-screen">
       <h2 className="text-3xl font-bold text-center mb-10">Checkout</h2>
@@ -58,12 +77,13 @@ const CheckOut = () => {
           <div className="mt-6">
             <Link to="/cart">
               <motion.button
+                onClick={handleSeeAllFoods}
                 className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-15 py-3  rounded-full font-medium transition-colors"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.4, duration: 0.8 }}
               >
-                See All Foods
+                Go to menu
               </motion.button>
             </Link>
           </div>

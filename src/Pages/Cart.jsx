@@ -1,14 +1,13 @@
-import React from "react";
 import { useCart } from "../Provider/CartContext";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Cart = () => {
   const { cart, removeFromCart, updateCartItem, clearCart } = useCart();
+  const navigate = useNavigate();
 
-  // Remove item
   const handleRemove = (id) => {
     removeFromCart(id);
-
     Swal.fire({
       icon: "success",
       title: "Removed",
@@ -20,16 +19,13 @@ const Cart = () => {
     });
   };
 
-  // Update quantity
   const handleQuantityChange = (id, quantity) => {
     if (quantity < 1) return;
     updateCartItem(id, quantity);
   };
 
-  // Clear all cart
   const handleClearCart = () => {
     clearCart();
-
     Swal.fire({
       icon: "success",
       title: "Cart Cleared",
@@ -40,7 +36,25 @@ const Cart = () => {
     });
   };
 
-  // Calculate total price
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      Swal.fire("Your cart is empty!", "", "warning");
+      return;
+    }
+    Swal.fire({
+      title: "Proceed to Checkout?",
+      text: "Are you sure you want to checkout with these items?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, proceed!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/checkout");
+      }
+    });
+  };
+
   const totalPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -86,10 +100,12 @@ const Cart = () => {
                   handleQuantityChange(item.id, parseInt(e.target.value))
                 }
                 className="w-20 p-2 border border-gray-300 rounded-xl text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                aria-label="Item quantity"
               />
               <button
                 onClick={() => handleRemove(item.id)}
                 className="text-red-500 font-semibold hover:underline hover:text-red-600 transition"
+                aria-label="Remove item from cart"
               >
                 Remove
               </button>
@@ -104,14 +120,14 @@ const Cart = () => {
           <button
             onClick={handleClearCart}
             className="bg-red-500 text-white px-5 py-2 rounded-full hover:bg-red-600 transition-colors"
+            aria-label="Clear the cart"
           >
             Clear Cart
           </button>
           <button
-            onClick={() =>
-              Swal.fire("Checkout", "Implement your checkout logic!", "info")
-            }
+            onClick={handleCheckout}
             className="bg-green-500 text-white px-5 py-2 rounded-full hover:bg-green-600 transition-colors"
+            aria-label="Proceed to checkout"
           >
             Checkout
           </button>

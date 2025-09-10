@@ -1,12 +1,18 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { addToCart as addToCartLS, getCart, removeFromCart as removeFromCartLS, updateCartItem as updateCartItemLS, clearCart as clearCartLS } from '../../public/localStorage';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  addToCart as addToCartLS,
+  getCart,
+  removeFromCart as removeFromCartLS,
+  updateCartItem as updateCartItemLS,
+  clearCart as clearCartLS,
+} from "../../public/localStorage";
 
 const CartContext = createContext();
 
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };
@@ -30,8 +36,8 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (item) => {
-    const updatedCart = addToCartLS(item);
-    setCart(updatedCart);
+    const updatedCart = addToCartLS(item); // This function uses _id as the unique identifier
+    setCart(updatedCart); // Update the cart in state
     return updatedCart;
   };
 
@@ -62,9 +68,5 @@ export const CartProvider = ({ children }) => {
     clearCart,
   };
 
-  return (
-    <CartContext.Provider value={value}>
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

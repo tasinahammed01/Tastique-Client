@@ -1,48 +1,45 @@
-// localstore.js
 const CART_KEY = "cart";
 
-// Get cart from localStorage
+// Get cart
 export const getCart = () => {
-  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  const cart = localStorage.getItem(CART_KEY);
+  return cart ? JSON.parse(cart) : [];
 };
 
-// Add item to cart
+// Save cart
+const saveCart = (cart) => {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  return cart;
+};
+
+
+// Add item
 export const addToCart = (item) => {
   const cart = getCart();
+  const existingItem = cart.find((i) => i.id === item._id); // Use `_id` from the API response
 
-  // Check if item already exists
-  const existingItem = cart.find((i) => i.id === item.id);
   if (existingItem) {
-    existingItem.quantity += item.quantity || 1;
+    existingItem.quantity += item.quantity || 1; // Increase quantity if item exists
   } else {
-    cart.push({ ...item, quantity: item.quantity || 1 });
+    cart.push({ ...item, id: item._id, quantity: item.quantity || 1 }); // Push the item with the correct `id` as `_id`
   }
 
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  return cart;
-};
-
-// Remove item from cart
-export const removeFromCart = (itemId) => {
-  const cart = getCart().filter((item) => item.id !== itemId);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  return cart;
+  return saveCart(cart);
 };
 
 // Update item quantity
-export const updateCartItem = (itemId, quantity) => {
-  const cart = getCart().map((item) => {
-    if (item.id === itemId) {
-      return { ...item, quantity };
-    }
-    return item;
-  });
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  return cart;
+export const updateCartItem = (id, quantity) => {
+  const cart = getCart();
+  const item = cart.find((i) => i.id === id);
+  if (item) item.quantity = quantity;
+  return saveCart(cart);
 };
 
-// Clear entire cart
-export const clearCart = () => {
-  localStorage.removeItem(CART_KEY);
-  return [];
+// Remove item
+export const removeFromCart = (id) => {
+  const cart = getCart().filter((i) => i.id !== id);
+  return saveCart(cart);
 };
+
+// Clear cart
+export const clearCart = () => saveCart([]);
