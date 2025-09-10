@@ -13,7 +13,7 @@ const Gallery = () => {
 
   return (
     <div className="px-6 py-10">
-      <h2 className="text-3xl font-bold text-center mb-8">Gallery</h2>
+      <h2 className="text-3xl md:text-6xl font-bold text-center mb-20">Gallery</h2>
 
       <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
         {images.map((img, index) => (

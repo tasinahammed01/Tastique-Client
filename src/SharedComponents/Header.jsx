@@ -23,7 +23,6 @@ const Header = () => {
     () => localStorage.getItem("theme") || "light"
   );
 
-
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -38,11 +37,13 @@ const Header = () => {
     <header className="sticky top-0 left-0 w-full backdrop-blur-md shadow-md z-50 border-b transition-colors duration-500 bg-base-100 dark:bg-base-100 border-neutral dark:border-neutral">
       <div className="container mx-auto flex justify-between items-center px-4 py-4">
         {/* Logo */}
-        <img
-          className="w-16"
-          src="https://i.ibb.co.com/V0dc4xBb/Screenshot-656-removebg-preview.png"
-          alt="Foodie Logo"
-        />
+        <Link to="/">
+          <img
+            className="w-16"
+            src="https://i.ibb.co.com/V0dc4xBb/Screenshot-656-removebg-preview.png"
+            alt="Foodie Logo"
+          />
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex space-x-6 items-center font-medium">

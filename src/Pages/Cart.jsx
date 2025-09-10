@@ -85,11 +85,11 @@ const Cart = () => {
                 onChange={(e) =>
                   handleQuantityChange(item.id, parseInt(e.target.value))
                 }
-                className="w-16 p-1 border rounded-lg text-center"
+                className="w-20 p-2 border border-gray-300 rounded-xl text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
               <button
                 onClick={() => handleRemove(item.id)}
-                className="text-red-500 font-semibold hover:underline"
+                className="text-red-500 font-semibold hover:underline hover:text-red-600 transition"
               >
                 Remove
               </button>
