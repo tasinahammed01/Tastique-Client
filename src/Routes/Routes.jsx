@@ -7,6 +7,7 @@ import ContactUs from "../Pages/ContactUs";
 import AboutUs from "../Pages/AboutUs";
 import Gallery from "../Pages/Gallery";
 import Menu from "../Pages/Menu";
+import CheckOut from "../Pages/CheckOut";
 import SingleMenu from "../Pages/SingleMenu";
 import Cart from "../Pages/Cart";
 
@@ -54,6 +55,10 @@ const routes = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart></Cart>,
+      },
+      {
+        path: "/checkout",
+        element: <CheckOut></CheckOut>,
       },
     ],
   },
