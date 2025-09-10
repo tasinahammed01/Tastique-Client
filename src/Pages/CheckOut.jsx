@@ -83,7 +83,7 @@ const CheckOut = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.4, duration: 0.8 }}
               >
-                Go to menu
+                Go to Cart
               </motion.button>
             </Link>
           </div>

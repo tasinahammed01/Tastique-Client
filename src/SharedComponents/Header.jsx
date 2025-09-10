@@ -16,7 +16,7 @@ const Header = () => {
     { name: "Contact", path: "/contact" },
     { name: "About", path: "/about" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Login/Register", path: "/login" },
+    { name: "Login/Register", path: "/register" },
   ];
 
   const [theme, setTheme] = useState(

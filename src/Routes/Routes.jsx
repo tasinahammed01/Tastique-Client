@@ -7,9 +7,12 @@ import ContactUs from "../Pages/ContactUs";
 import AboutUs from "../Pages/AboutUs";
 import Gallery from "../Pages/Gallery";
 import Menu from "../Pages/Menu";
+import Reservation from "../Pages/Reservation";
 import CheckOut from "../Pages/CheckOut";
 import SingleMenu from "../Pages/SingleMenu";
 import Cart from "../Pages/Cart";
+import Register from "../Pages/Register";
+import Login from "../Pages/Login";
 
 const routes = createBrowserRouter([
   {
@@ -25,8 +28,8 @@ const routes = createBrowserRouter([
         element: <Menu></Menu>,
       },
       {
-        path: "/menu",
-        element: <Menu></Menu>,
+        path: "/reservation",
+        element: <Reservation></Reservation>,
       },
       {
         path: "/menu/:id",
@@ -59,6 +62,14 @@ const routes = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckOut></CheckOut>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
       },
     ],
   },
