@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import HomePage from "../Pages/HomePage";
 import Blogs from "../Pages/Blogs";
@@ -15,78 +15,56 @@ import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 
 import ProtectedRoute from "./ProtectedRoute";
-import Dashboard from "../SharedComponents/Dashboard";
+
+// --- Dashboard Pages ---
+import Users from "../Components/AdminDashboard/Users";
+import Orders from "../Components/AdminDashboard/Orders";
+import Analytics from "../Components/AdminDashboard/Analytics";
+import CustomerOrders from "../Components/Customers/CustomerOrders";
+import CustomerProfile from "../Components/Customers/CustomerProfile";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout></MainLayout>,
+    element: <MainLayout />,
     children: [
-      {
-        path: "/",
-        element: <HomePage></HomePage>,
-      },
-      {
-        path: "/menu",
-        element: <Menu></Menu>,
-      },
-      {
-        path: "/reservation",
-        element: <Reservation></Reservation>,
-      },
-      {
-        path: "/menu/:id",
-        element: <SingleMenu></SingleMenu>,
-      },
-      {
-        path: "/contact",
-        element: <ContactUs></ContactUs>,
-      },
-      {
-        path: "/about",
-        element: <AboutUs></AboutUs>,
-      },
-      {
-        path: "/gallery",
-        element: <Gallery></Gallery>,
-      },
-      {
-        path: "/blogs",
-        element: <Blogs></Blogs>,
-      },
-      {
-        path: "/blogs/:id",
-        element: <SingleBlog></SingleBlog>,
-      },
-      {
-        path: "/cart",
-        element: <Cart></Cart>,
-      },
+      { path: "/", element: <HomePage /> },
+      { path: "/menu", element: <Menu /> },
+      { path: "/reservation", element: <Reservation /> },
+      { path: "/menu/:id", element: <SingleMenu /> },
+      { path: "/contact", element: <ContactUs /> },
+      { path: "/about", element: <AboutUs /> },
+      { path: "/gallery", element: <Gallery /> },
+      { path: "/blogs", element: <Blogs /> },
+      { path: "/blogs/:id", element: <SingleBlog /> },
+      { path: "/cart", element: <Cart /> },
       {
         path: "/checkout",
         element: (
           <ProtectedRoute>
-            <CheckOut></CheckOut>
+            <CheckOut />
           </ProtectedRoute>
         ),
       },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "/register",
-        element: <Register></Register>,
-      },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
       {
         path: "/dashboard",
         element: (
           <ProtectedRoute>
-            <Dashboard />
+            <DashboardLayout />
           </ProtectedRoute>
         ),
         children: [
-          
+          // ✅ Admin Dashboard Routes
+          { path: "admin/users", element: <Users /> },
+          { path: "admin/orders", element: <Orders /> },
+          { path: "admin/analytics", element: <Analytics /> },
+
+          // ✅ Customer Dashboard Routes
+          { path: "customer/orders", element: <CustomerOrders /> },
+          { path: "customer/profile", element: <CustomerProfile /> },
         ],
       },
     ],
