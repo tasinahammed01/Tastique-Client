@@ -85,7 +85,7 @@ const PopulerFoods = () => {
                   Add to Cart
                 </motion.button>
 
-                <Link to="/">
+                <Link to={`/menu/${food._id}`}>
                   <motion.button
                     className="w-full xl:w-auto cursor-pointer text-accent hover:text-white border border-accent md:px-7 md:py-4 lg:px-5 lg:py-3 xl:px-10 xl:py-3 2xl:px-10 2xl:py-3 px-5 py-2 rounded-full font-medium hover:bg-accent/90 transition-colors"
                     initial={{ opacity: 0 }}
