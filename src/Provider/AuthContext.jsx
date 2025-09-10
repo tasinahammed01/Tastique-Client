@@ -6,6 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import auth from "../firebase/firebase.init";
+import Loading from "../SharedComponents/Loading/Loading";
 
 export const AuthContext = createContext(null);
 
@@ -80,7 +81,9 @@ const AuthProvider = ({ children }) => {
     signOutUser,
   };
 
-  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
