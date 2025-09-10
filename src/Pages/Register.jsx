@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 
 const Register = () => {
@@ -15,7 +15,6 @@ const Register = () => {
 
   const [animationData, setAnimationData] = useState(null);
 
-  // Fetch Lottie JSON from URL
   useEffect(() => {
     fetch("https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json")
       .then((res) => res.json())
@@ -61,49 +60,58 @@ const Register = () => {
       )}
 
       {/* Registration Form */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full md:w-1/2 max-w-md p-8 rounded-2xl shadow-lg bg-base-100"
-      >
-        <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
-
-        <input
-          {...register("name", { required: true })}
-          placeholder="Full Name"
-          className="w-full p-3 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.name && (
-          <p className="text-red-500 text-sm mb-2">Name is required</p>
-        )}
-
-        <input
-          {...register("email", { required: true })}
-          placeholder="Email"
-          className="w-full p-3 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mb-2">Email is required</p>
-        )}
-
-        <input
-          {...register("password", { required: true, minLength: 6 })}
-          type="password"
-          placeholder="Password"
-          className="w-full p-3 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mb-2">
-            Password must be at least 6 characters
-          </p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full py-3 bg-accent text-white rounded-lg font-semibold hover:bg-accent/70 transition"
+      <div className="w-full md:w-1/2 flex flex-col items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full max-w-md p-8 rounded-2xl shadow-lg bg-base-100 flex flex-col gap-4"
         >
-          Register
-        </button>
-      </form>
+          <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
+
+          <input
+            {...register("name", { required: true })}
+            placeholder="Full Name"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm">Name is required</p>
+          )}
+
+          <input
+            {...register("email", { required: true })}
+            placeholder="Email"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">Email is required</p>
+          )}
+
+          <input
+            {...register("password", { required: true, minLength: 6 })}
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">
+              Password must be at least 6 characters
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-accent text-white rounded-lg font-semibold hover:bg-accent/70 transition"
+          >
+            Register
+          </button>
+        </form>
+
+        <Link
+          to="/login"
+          className="mt-4 text-accent hover:underline font-medium"
+        >
+          Already have an account? Login
+        </Link>
+      </div>
     </div>
   );
 };
