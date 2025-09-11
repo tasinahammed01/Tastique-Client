@@ -129,9 +129,24 @@ const Header = () => {
 
         {/* Mobile Hamburger + Theme */}
         <div className="flex items-center lg:hidden space-x-4">
+          {/* Theme toggle */}
           <button onClick={toggleTheme} className="text-xl">
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
+
+          {/* Cart */}
+          <div className="relative text-2xl cursor-pointer">
+            <Link to="/cart">
+              <FaShoppingCart />
+            </Link>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                {cartCount}
+              </span>
+            )}
+          </div>
+
+          {/* Hamburger */}
           <button className="text-2xl" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
