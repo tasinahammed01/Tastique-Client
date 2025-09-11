@@ -19,7 +19,7 @@ const PopulerFoods = () => {
 
   // Fetch populer foods
   useEffect(() => {
-    fetch("http://localhost:5000/allfoods")
+    fetch("https://testique-backend.onrender.com/allfoods")
       .then((res) => res.json())
       .then((data) => {
         setPopulerFoods(data.filter((item) => item.populer === true));

@@ -27,7 +27,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       // Check if user exists
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://testique-backend.onrender.com/users");
       const existingUser = res.data.find((u) => u.email === data.email);
       if (existingUser) {
         Swal.fire("Error", "Email already registered", "error");
@@ -49,7 +49,7 @@ const Register = () => {
 
       // Save user in MongoDB
       const backendResponse = await axios.post(
-        "http://localhost:5000/users",
+        "https://testique-backend.onrender.com/users",
         newUser
       );
       if (backendResponse.status !== 201)

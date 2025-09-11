@@ -6,7 +6,7 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allblogs")
+    fetch("https://testique-backend.onrender.com/allblogs")
       .then((res) => res.json())
       .then((data) => {
         setBlogs(data);

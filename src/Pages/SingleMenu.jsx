@@ -16,7 +16,7 @@ const SingleMenu = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/allfoods/${id}`);
+        const res = await fetch(`https://testique-backend.onrender.com/allfoods/${id}`);
         if (!res.ok) throw new Error("Failed to fetch food");
         const data = await res.json();
         setFood(data);
@@ -60,7 +60,7 @@ const SingleMenu = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:5000/allfoods/${id}/comments`, {
+      const res = await fetch(`https://testique-backend.onrender.com/allfoods/${id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commentData),

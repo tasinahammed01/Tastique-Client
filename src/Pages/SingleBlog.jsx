@@ -13,12 +13,12 @@ const SingleBlog = () => {
 
   useEffect(() => {
     // Fetch single blog
-    fetch(`http://localhost:5000/allblogs/${id}`)
+    fetch(`https://testique-backend.onrender.com/allblogs/${id}`)
       .then((res) => res.json())
       .then((data) => setBlog(data));
 
     // Fetch recent blogs
-    fetch(`http://localhost:5000/allblogs`)
+    fetch(`https://testique-backend.onrender.com/allblogs`)
       .then((res) => res.json())
       .then((data) => setRecentBlogs(data.slice(0, 3))); 
   }, [id]);
@@ -33,7 +33,7 @@ const SingleBlog = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:5000/blogs/${id}/comments`, {
+      const res = await fetch(`https://testique-backend.onrender.com/blogs/${id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

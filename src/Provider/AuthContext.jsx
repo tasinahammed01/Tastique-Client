@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
   const fetchUserDetails = async (firebaseUser) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/users?email=${firebaseUser.email}`
+        `https://testique-backend.onrender.com/users?email=${firebaseUser.email}`
       );
       if (response.ok) {
         const users = await response.json();

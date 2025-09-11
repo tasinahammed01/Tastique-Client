@@ -18,7 +18,7 @@ const Orders = () => {
       console.log("Fetching orders...");
       
       // Fetch orders from the orders endpoint (single source of truth)
-      const ordersRes = await axios.get("http://localhost:5000/orders");
+      const ordersRes = await axios.get("https://testique-backend.onrender.com/orders");
       const allOrders = ordersRes.data;
 
       // Attach userName for each order
@@ -29,7 +29,7 @@ const Orders = () => {
           }
           
           try {
-            const userRes = await axios.get(`http://localhost:5000/users/${order.userId}`);
+            const userRes = await axios.get(`https://testique-backend.onrender.com/users/${order.userId}`);
             return {
               ...order,
               userName: userRes.data.name,
@@ -78,7 +78,7 @@ const Orders = () => {
     if (!result.isConfirmed) return;
 
     try {
-      await axios.delete(`http://localhost:5000/orders/${orderId}`);
+      await axios.delete(`https://testique-backend.onrender.com/orders/${orderId}`);
       
       Swal.fire("Deleted!", "Order has been deleted.", "success");
       fetchOrders();
@@ -93,7 +93,7 @@ const Orders = () => {
     try {
       console.log("Updating order:", { orderId, newStatus });
       
-      await axios.put(`http://localhost:5000/orders/${orderId}`, { status: newStatus });
+      await axios.put(`https://testique-backend.onrender.com/orders/${orderId}`, { status: newStatus });
 
       Swal.fire("Updated!", "Order status updated.", "success");
       fetchOrders();

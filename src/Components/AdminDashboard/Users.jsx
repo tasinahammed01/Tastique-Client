@@ -7,7 +7,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://testique-backend.onrender.com/users");
       setUsers(res.data);
     } catch (err) {
       console.error(err);
@@ -28,7 +28,7 @@ const Users = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/users/${id}`);
+        await axios.delete(`https://testique-backend.onrender.com/users/${id}`);
         Swal.fire("Deleted!", "User has been deleted.", "success");
         fetchUsers();
       } catch (err) {

@@ -50,7 +50,7 @@ const Footer = () => {
         <div>
           <h3 className=" text-xl font-semibold mb-4">Contact Us</h3>
           <p className="">123 Food Street, Flavor Town</p>
-          <p className=" mt-1">Email: info@foodie.com</p>
+          <p className=" mt-1">Email: info@Tanjid.testique.com</p>
           <p className=" mt-1">Phone: +1 234 567 890</p>
 
           <div className="flex space-x-4 mt-4">
@@ -86,7 +86,7 @@ const Footer = () => {
 
       {/* Bottom */}
       <div className=" border-t border-neutral pt-6 text-center  text-sm">
-        &copy; {new Date().getFullYear()} Foodie. All rights reserved.
+        &copy; {new Date().getFullYear()} Tanjid Ahammed. All rights reserved.
       </div>
     </footer>
   );

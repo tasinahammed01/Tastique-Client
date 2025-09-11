@@ -5,7 +5,7 @@ const Gallery = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/gallery")
+    fetch("https://testique-backend.onrender.com/gallery")
       .then((res) => res.json())
       .then((data) => setImages(data))
       .catch((err) => console.error("Error fetching gallery:", err));

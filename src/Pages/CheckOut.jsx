@@ -19,7 +19,7 @@ const CheckOut = () => {
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const amountInCents = useMemo(() => Math.round(total * 100), [total]);
-  const serverBaseUrl = "http://localhost:5000";
+  const serverBaseUrl = "https://testique-backend.onrender.com";
 
   const isDarkMode = useMemo(() => {
     if (typeof window === "undefined") return false;

@@ -51,7 +51,7 @@ Stored in OrdersDB.OrdersCollection:
 
 Prerequisites
 - Node.js 18+
-- Backend API running at http://localhost:5000
+- Backend API running at https://testique-backend.onrender.com
 
 Install & Run
 ```
@@ -68,7 +68,7 @@ Payments
 
 ## ⚙️ Configuration
 
-- API base URL is currently http://localhost:5000 in several components (e.g., CheckOut.jsx, admin orders). For deployment, centralize this with an env var and a single HTTP client.
+- API base URL is currently https://testique-backend.onrender.com in several components (e.g., CheckOut.jsx, admin orders). For deployment, centralize this with an env var and a single HTTP client.
 - Firebase config is in src/firebase/firebase.init.js — set your environment values accordingly.
 
 ## 🧪 Scripts

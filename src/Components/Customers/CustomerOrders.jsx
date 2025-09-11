@@ -8,7 +8,7 @@ const CustomerOrders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const serverBaseUrl = useMemo(() => "http://localhost:5000", []);
+  const serverBaseUrl = useMemo(() => "https://testique-backend.onrender.com", []);
 
   useEffect(() => {
     const fetchOrders = async () => {

@@ -24,7 +24,7 @@ const CustomerProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/users");
+        const res = await fetch("https://testique-backend.onrender.com/users");
         if (!res.ok) throw new Error("Failed to fetch users");
 
         const users = await res.json();
@@ -50,7 +50,7 @@ const CustomerProfile = () => {
   const handleUpdate = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/users/${userId}`, {
+      const response = await fetch(`https://testique-backend.onrender.com/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

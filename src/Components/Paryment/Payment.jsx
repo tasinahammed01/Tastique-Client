@@ -6,7 +6,7 @@ import CheckOut from "../../Pages/CheckOut";
 const Payment = () => {
   const [stripePromise, setStripePromise] = useState(null);
 
-  const serverBaseUrl = "http://localhost:5000";
+  const serverBaseUrl = "https://testique-backend.onrender.com";
 
   useEffect(() => {
     const envKey =
