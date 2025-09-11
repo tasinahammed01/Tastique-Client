@@ -62,7 +62,7 @@ const DashboardLayout = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed z-40 top-0 left-0 h-full bg-gray-900 text-white flex flex-col justify-between
+        className={`fixed z-40 top-0 left-0 h-full bg-neutral white flex flex-col justify-between
           w-64 transform transition-transform duration-300
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:relative
@@ -76,8 +76,8 @@ const DashboardLayout = () => {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-gray-700 transition ${
-                    isActive ? "bg-gray-700" : ""
+                  `p-2 rounded hover:bg-accent/80 transition ${
+                    isActive ? "bg-accent" : ""
                   }`
                 }
               >

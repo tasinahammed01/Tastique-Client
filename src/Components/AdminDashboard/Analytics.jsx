@@ -2,8 +2,8 @@
 
 const Analytics = () => {
     return (
-        <div>
-            <h1>Analytics</h1>
+        <div className="flex justify-center items-center">
+            <h1 className="text-4xl">Analytics Comming soon</h1>
         </div>
     );
 };

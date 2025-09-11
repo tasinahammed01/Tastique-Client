@@ -57,7 +57,7 @@ const Header = () => {
     if (user) {
       links.push({
         name: "Dashboard",
-        path: user.role === "admin" ? "/admin" : "/dashboard",
+        path: user.role === "admin" ? "/dashboard/admin/users" : "/dashboard",
       });
     }
 
