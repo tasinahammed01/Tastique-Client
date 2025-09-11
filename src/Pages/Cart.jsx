@@ -62,36 +62,41 @@ const Cart = () => {
 
   if (cart.length === 0)
     return (
-      <div className="p-10 text-center text-xl font-semibold">
+      <div className="p-6 sm:p-10 text-center text-lg sm:text-xl font-semibold">
         Your cart is empty
       </div>
     );
 
   return (
-    <div className="p-10">
-      <h2 className="text-3xl font-bold mb-8">Your Cart</h2>
+    <div className="p-4 sm:p-6 lg:p-10 max-w-6xl mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center md:text-left">
+        Your Cart
+      </h2>
 
+      {/* Cart Items */}
       <div className="flex flex-col gap-6">
         {cart.map((item) => (
           <div
             key={item.id}
-            className="flex justify-between items-center bg-neutral p-4 rounded-xl shadow-md"
+            className="flex flex-col md:flex-row justify-between md:items-center bg-neutral p-4 rounded-xl shadow-md"
           >
+            {/* Image + Info */}
             <div className="flex items-center gap-4">
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-20 h-20 object-cover rounded-lg"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
               />
               <div>
-                <h3 className="font-bold text-lg">{item.name}</h3>
+                <h3 className="font-bold text-base sm:text-lg">{item.name}</h3>
                 <p className="text-sm text-gray-600">
                   ${item.price.toFixed(2)}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            {/* Quantity + Remove */}
+            <div className="flex items-center gap-3 sm:gap-4 mt-4 md:mt-0">
               <input
                 type="number"
                 min="1"
@@ -99,12 +104,12 @@ const Cart = () => {
                 onChange={(e) =>
                   handleQuantityChange(item.id, parseInt(e.target.value))
                 }
-                className="w-20 p-2 border border-gray-300 rounded-xl text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-16 sm:w-20 p-2 border border-gray-300 rounded-xl text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm sm:text-base"
                 aria-label="Item quantity"
               />
               <button
                 onClick={() => handleRemove(item.id)}
-                className="text-red-500 font-semibold hover:underline hover:text-red-600 transition"
+                className="text-red-500 text-sm sm:text-base font-semibold hover:underline hover:text-red-600 transition"
                 aria-label="Remove item from cart"
               >
                 Remove
@@ -114,19 +119,22 @@ const Cart = () => {
         ))}
       </div>
 
-      <div className="mt-8 flex justify-between items-center">
-        <h3 className="text-2xl font-bold">Total: ${totalPrice.toFixed(2)}</h3>
-        <div className="flex gap-4">
+      {/* Total + Actions */}
+      <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-center md:text-left">
+          Total: ${totalPrice.toFixed(2)}
+        </h3>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <button
             onClick={handleClearCart}
-            className="bg-red-500 text-white px-5 py-2 rounded-full hover:bg-red-600 transition-colors"
+            className="bg-red-500 text-white px-4 sm:px-5 py-2 rounded-full hover:bg-red-600 transition-colors text-sm sm:text-base"
             aria-label="Clear the cart"
           >
             Clear Cart
           </button>
           <button
             onClick={handleCheckout}
-            className="bg-green-500 text-white px-5 py-2 rounded-full hover:bg-green-600 transition-colors"
+            className="bg-green-500 text-white px-4 sm:px-5 py-2 rounded-full hover:bg-green-600 transition-colors text-sm sm:text-base"
             aria-label="Proceed to checkout"
           >
             Checkout
