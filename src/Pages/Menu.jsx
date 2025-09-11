@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { useCart } from "../Provider/CartContext";
+import { getBookmarks, toggleBookmark, isBookmarked } from "../utils/localStorage";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Menu = () => {
@@ -10,6 +12,7 @@ const Menu = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const { addToCart } = useCart();
+  const [bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/allfoods")
@@ -18,6 +21,11 @@ const Menu = () => {
         setFoods(data);
         setFilteredFoods(data);
       });
+  }, []);
+
+  // Load bookmarks on mount
+  useEffect(() => {
+    setBookmarks(getBookmarks());
   }, []);
 
   useEffect(() => {
@@ -42,6 +50,23 @@ const Menu = () => {
       text: `${food.name} has been added to your cart!`,
       showConfirmButton: false,
       timer: 1500,
+      toast: true,
+      position: "top-end",
+    });
+  };
+
+  const handleToggleBookmark = (food) => {
+    const updated = toggleBookmark(bookmarks, food);
+    setBookmarks(updated);
+    const marked = isBookmarked(updated, food._id || food.id);
+    Swal.fire({
+      icon: marked ? "success" : "info",
+      title: marked ? "Bookmarked" : "Removed",
+      text: marked
+        ? `${food.name} has been bookmarked!`
+        : `${food.name} removed from bookmarks.`,
+      showConfirmButton: false,
+      timer: 1200,
       toast: true,
       position: "top-end",
     });
@@ -103,6 +128,19 @@ const Menu = () => {
               ) : (
                 ""
               )}
+
+              {/* Bookmark Icon */}
+              <button
+                onClick={() => handleToggleBookmark(food)}
+                className="absolute top-3 left-4 cursor-pointer text-white text-xl"
+                aria-label="Toggle Bookmark"
+              >
+                {isBookmarked(bookmarks, food._id || food.id) ? (
+                  <FaBookmark className="text-yellow-400 drop-shadow-md" />
+                ) : (
+                  <FaRegBookmark className="text-gray-200 drop-shadow-md" />
+                )}
+              </button>
             </div>
 
             {/* Info */}

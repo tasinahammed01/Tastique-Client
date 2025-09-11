@@ -5,7 +5,7 @@ import {
   removeFromCart as removeFromCartLS,
   updateCartItem as updateCartItemLS,
   clearCart as clearCartLS,
-} from "../../public/localStorage";
+} from "../utils/localStorage";
 
 const CartContext = createContext();
 
@@ -21,38 +21,40 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [cartCount, setCartCount] = useState(0);
 
-  // Load cart from localStorage on mount
+  // Load cart on mount
   useEffect(() => {
     const savedCart = getCart();
     setCart(savedCart);
-    const totalItems = savedCart.reduce((acc, item) => acc + item.quantity, 0);
-    setCartCount(totalItems);
   }, []);
 
-  // Update cart count whenever cart changes
+  // Update cartCount whenever cart changes
   useEffect(() => {
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
     setCartCount(totalItems);
   }, [cart]);
 
+  // Add item
   const addToCart = (item) => {
-    const updatedCart = addToCartLS(item); // This function uses _id as the unique identifier
-    setCart(updatedCart); // Update the cart in state
+    const updatedCart = addToCartLS(item);
+    setCart(updatedCart);
     return updatedCart;
   };
 
+  // Remove item
   const removeFromCart = (itemId) => {
     const updatedCart = removeFromCartLS(itemId);
     setCart(updatedCart);
     return updatedCart;
   };
 
+  // Update quantity
   const updateCartItem = (itemId, quantity) => {
     const updatedCart = updateCartItemLS(itemId, quantity);
     setCart(updatedCart);
     return updatedCart;
   };
 
+  // Clear cart
   const clearCart = () => {
     const clearedCart = clearCartLS();
     setCart(clearedCart);
