@@ -85,7 +85,7 @@ Payments
   - Monorepo-ready structure and modular services
 
 - Customer Experience
-  - Menu search, filtering, categories, and pagination
+  - Menu pagination
   - Favorites with personalization and recommendations
   - Address book and saved payment methods
   - Order tracking timeline with real-time status updates
@@ -93,7 +93,6 @@ Payments
   - Multi-currency and localization (i18n)
 
 - Admin & Operations
-  - Role-based access control (RBAC)
   - Advanced analytics and export (CSV/PDF)
   - Bulk status updates and order batching
   - Inventory hooks and low-stock alerts
