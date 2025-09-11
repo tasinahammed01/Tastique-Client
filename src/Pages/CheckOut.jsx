@@ -156,7 +156,7 @@ const CheckOut = () => {
           icon: "success",
         });
         clearCart();
-        navigate("/");
+        navigate("/dashboard/customer/orders");
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Payment error";
