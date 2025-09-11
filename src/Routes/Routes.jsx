@@ -9,6 +9,7 @@ import Gallery from "../Pages/Gallery";
 import Menu from "../Pages/Menu";
 import Reservation from "../Pages/Reservation";
 import CheckOut from "../Pages/CheckOut";
+import Payment from "../Components/Paryment/Payment";
 import SingleMenu from "../Pages/SingleMenu";
 import Cart from "../Pages/Cart";
 import Register from "../Pages/Register";
@@ -44,7 +45,7 @@ const routes = createBrowserRouter([
         path: "/checkout",
         element: (
           <ProtectedRoute>
-            <CheckOut />
+            <Payment />
           </ProtectedRoute>
         ),
       },

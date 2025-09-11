@@ -30,6 +30,7 @@ const AuthProvider = ({ children }) => {
             role: userData.role,
             name: userData.name,
             totalDonated: userData.totalDonated,
+            id: userData._id,
           };
           setUser(formattedUser);
           localStorage.setItem("user", JSON.stringify(formattedUser));

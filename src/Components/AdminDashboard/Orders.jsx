@@ -17,43 +17,11 @@ const Orders = () => {
     try {
       console.log("Fetching orders...");
       
-      // Fetch orders from the new orders endpoint
+      // Fetch orders from the orders endpoint (single source of truth)
       const ordersRes = await axios.get("http://localhost:5000/orders");
-      const newOrders = ordersRes.data;
-      console.log("New orders:", newOrders);
+      const allOrders = ordersRes.data;
 
-      // Fetch users to get orders from the old structure
-      const usersRes = await axios.get("http://localhost:5000/users");
-      const users = usersRes.data;
-      console.log("Users data:", users);
-
-      // Extract orders from users (old structure)
-      const oldOrders = [];
-      users.forEach((user) => {
-        if (user.orders) {
-          // Handle both array and object formats
-          const ordersArray = Array.isArray(user.orders) ? user.orders : [user.orders];
-          
-          ordersArray.forEach((order, index) => {
-            // Only process if order has meaningful data (not empty object)
-            if (order && (order.items || order.totalAmount || order.status)) {
-              oldOrders.push({
-                ...order,
-                userId: user._id,
-                userName: user.name,
-                orderIndex: index, // Add index for deletion
-              });
-            }
-          });
-        }
-      });
-      console.log("Old orders:", oldOrders);
-
-      // Combine both old and new orders
-      const allOrders = [...oldOrders, ...newOrders];
-      console.log("All orders combined:", allOrders);
-
-      // Get user information for new orders that don't have userName
+      // Attach userName for each order
       const ordersWithUserInfo = await Promise.all(
         allOrders.map(async (order) => {
           if (order.userName) {
@@ -97,7 +65,7 @@ const Orders = () => {
   };
 
   // Delete order
-  const handleDelete = async (userId, orderId, orderIndex) => {
+  const handleDelete = async (_userId, orderId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this order deletion!",
@@ -110,25 +78,7 @@ const Orders = () => {
     if (!result.isConfirmed) return;
 
     try {
-      // Check if this is an old order (no orderId) or new order (has orderId)
-      if (!orderId) {
-        // This is an old order stored within user document
-        // We need to remove it from the user's orders array using the index
-        const userRes = await axios.get(`http://localhost:5000/users/${userId}`);
-        const user = userRes.data;
-        
-        // Remove the order at the specified index
-        const updatedOrders = user.orders.filter((order, index) => index !== orderIndex);
-        
-        await axios.put(`http://localhost:5000/users/${userId}`, {
-          orders: updatedOrders
-        });
-      } else {
-        // This is a new order stored as separate document
-        await axios.delete(
-          `http://localhost:5000/orders/delete/${userId}/${orderId}`
-        );
-      }
+      await axios.delete(`http://localhost:5000/orders/${orderId}`);
       
       Swal.fire("Deleted!", "Order has been deleted.", "success");
       fetchOrders();
@@ -139,40 +89,11 @@ const Orders = () => {
   };
 
   // Update order status
-  const handleStatusChange = async (userId, orderId, newStatus, orderIndex) => {
+  const handleStatusChange = async (_userId, orderId, newStatus) => {
     try {
-      console.log("Updating order:", { userId, orderId, newStatus, orderIndex });
+      console.log("Updating order:", { orderId, newStatus });
       
-      // Check if this is an old order (no orderId) or new order (has orderId)
-      if (!orderId) {
-        console.log("Updating legacy order (stored in user document)");
-        // This is an old order stored within user document
-        // We need to update it in the user's orders array
-        const userRes = await axios.get(`http://localhost:5000/users/${userId}`);
-        const user = userRes.data;
-        
-        console.log("Current user orders:", user.orders);
-        
-        // Update only the specific order in the user's orders array
-        const updatedOrders = user.orders.map((order, index) => 
-          index === orderIndex 
-            ? { ...order, status: newStatus, updatedAt: new Date().toISOString() }
-            : order
-        );
-        
-        console.log("Updated orders:", updatedOrders);
-        
-        await axios.put(`http://localhost:5000/users/${userId}`, {
-          orders: updatedOrders
-        });
-      } else {
-        console.log("Updating new order (separate document)");
-        // This is a new order stored as separate document
-        await axios.put(
-          `http://localhost:5000/orders/update/${userId}/${orderId}`,
-          { status: newStatus }
-        );
-      }
+      await axios.put(`http://localhost:5000/orders/${orderId}`, { status: newStatus });
 
       Swal.fire("Updated!", "Order status updated.", "success");
       fetchOrders();
@@ -201,7 +122,7 @@ const Orders = () => {
                 User Name
               </th>
               <th className="p-3 border-r text-left font-semibold italic">
-                Items
+                Items (Product ID • Name • Price • Qty)
               </th>
               <th className="p-3 border-r text-left font-semibold italic">
                 Total Amount
@@ -226,17 +147,19 @@ const Orders = () => {
               >
                 <td className="p-3 font-medium border-r">{order.userName}</td>
                 <td className="p-3 border-r">
-                  {order.items?.map(
-                    (
-                      item,
-                      i // ✅ safe mapping
-                    ) => (
-                      <div key={i} className="mb-1">
-                        <span className="font-semibold">{item.name}</span> ×{" "}
-                        {item.quantity} (${item.price})
+                  {order.items?.map((item, i) => (
+                    <div key={i} className="mb-1">
+                      <div className="text-sm">
+                        <span className="text-gray-600">{item.productId || "—"}</span>
+                        {" • "}
+                        <span className="font-semibold">{item.name}</span>
+                        {" • $"}
+                        {item.price}
+                        {" • Qty: "}
+                        {item.quantity}
                       </div>
-                    )
-                  )}
+                    </div>
+                  ))}
                 </td>
                 <td className="p-3 font-semibold border-r">
                   ${order.totalAmount}
@@ -281,7 +204,7 @@ const Orders = () => {
                 </td>
                 <td className="p-3">
                   <button
-                    onClick={() => handleDelete(order.userId, order.orderId, order.orderIndex)}
+                    onClick={() => handleDelete(order.userId, order.orderId)}
                     className="px-4 py-2 rounded border cursor-pointer hover:shadow-md transition"
                   >
                     Delete
