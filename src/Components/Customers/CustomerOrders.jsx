@@ -60,7 +60,7 @@ const CustomerOrders = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="md:p-6">
       <h2 className="text-3xl font-bold mb-6">My Orders</h2>
 
       <div className="space-y-6">

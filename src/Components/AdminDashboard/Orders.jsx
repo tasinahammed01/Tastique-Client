@@ -108,7 +108,7 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="md:p-6">
       <h2 className="text-3xl font-bold mb-8 text-center underline decoration-gray-400">
         Manage Orders
       </h2>

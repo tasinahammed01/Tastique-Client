@@ -81,7 +81,7 @@ const CustomerProfile = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center md:p-6">
       <div className="w-full max-w-2xl p-8 rounded-2xl shadow-lg border border-gray-200">
         <h2 className="text-3xl font-bold mb-8">My Profile</h2>
 
