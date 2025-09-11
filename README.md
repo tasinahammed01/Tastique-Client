@@ -3,7 +3,7 @@
 > A modern, responsive food ordering UI built with React and Stripe. Customers can explore the menu, manage their cart, pay securely, and track orders. Admins manage orders via a dashboard.
 
 ---
-🌐 **Website Live Link:** [Testique Food Resturent]((https://testique.netlify.app/))
+🌐 **Website Live Link:** [Testique Food Resturent](https://testique.netlify.app/)
 
 ## ✨ Tech Stack
 
