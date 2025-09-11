@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useParams } from "react-router";
 import { useCart } from "../Provider/CartContext";
 import Swal from "sweetalert2";
 
@@ -48,6 +48,14 @@ const SingleMenu = () => {
       });
     }
   };
+
+const handleBuyNow = () => {
+  if (food) {
+    addToCart({ ...food, quantity });
+    Navigate("/checkout");
+  }
+};
+
 
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
@@ -144,7 +152,9 @@ const SingleMenu = () => {
               Add to Cart
             </motion.button>
             <Link to="/checkout">
-              <motion.button className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors">
+              <motion.button
+              onClick={handleBuyNow}
+              className="w-full xl:w-auto cursor-pointer text-white bg-accent hover:bg-accent/90 px-5 py-2 rounded-full font-medium transition-colors">
                 Buy Now
               </motion.button>
             </Link>
